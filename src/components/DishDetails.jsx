@@ -1,6 +1,6 @@
 import React from 'react'
 import { Badge, Card, Col, Container, Row } from 'react-bootstrap'
-import { DishComments } from './DishComments'
+import DishComments from './DishComments'
 import allTheDishes from '../data/menu.json'
 
 class DishDetails extends React.Component {
@@ -11,15 +11,16 @@ class DishDetails extends React.Component {
     componentDidMount() {
         let dishIdFromTheSearchBar = this.props.match.params.stefano;
         let correctDishToLoad = allTheDishes.find(dish => dish.id.toString() === dishIdFromTheSearchBar)
-        this.setState({
+        setTimeout(this.setState({
             dish: correctDishToLoad
-        })
+        }),1000)
+        
     }
 
     render() {
         return (
             <Container>
-                {this.state.dish &&
+                {this.state.dish ?
                     <div>
                         <Row className="my-2">
                             <Col md={3}>
@@ -40,8 +41,8 @@ class DishDetails extends React.Component {
                             </Col>
                         </Row>
                         <DishComments selectedDish={this.state.dish} />
-                    </div>}
-                {!this.state.dish && <h1>LOADING</h1>}
+                    </div> :<h1>LOADING</h1> }
+               
             </Container>
         )
     }
